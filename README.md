@@ -1,0 +1,2 @@
+# blogadmin
+a blog server
