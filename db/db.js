@@ -7,7 +7,7 @@ const client = Mysql.createConnection({
 
 client.connect((err) => {
   if (!err) {
-    console.log('链接成功！！！！！')
+    console.log('数据库链接成功！！！！！')
   }
 })
 

@@ -6,9 +6,5 @@ module.exports = {
     password: 'root',
     user: 'root',
     database: 'blog'
-  },
-  codeMessage: {
-    ERRCODE: -1,
-    SUCCESSCODE: 0
   }
 }

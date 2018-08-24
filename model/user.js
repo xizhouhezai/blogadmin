@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 
 const { encrypt } = require('../util/md5')
 const secret  = require('../config')
-const { codeMessage } = require('../config')
+const { codeMessage } = require('../config/info')
 const query = require('../db/query')
 
 module.exports = {
@@ -18,9 +18,9 @@ module.exports = {
         id: res[0].id,
         name: res[0].username
       }
-      const token = jwt.sign(userToken, secret.sign, {expiresIn: '7d'})  //token签名 有效期为1小时
+      const token = jwt.sign(userToken, secret.sign, {expiresIn: '7d'})
       ctx.body = {
-          message: '获取token成功',
+          message: 'get the token successfully',
           code: codeMessage.SUCCESSCODE,
           token
       }
@@ -32,21 +32,39 @@ module.exports = {
     }
   },
   async Login(ctx) {
-    const token = ctx.header.authorization
-    if (token) {
-      jwt.verify(token, secret.sign, (err, decode) => {
-        if (!err) {
-          ctx.body = {
-            decode
-          }
-        } else {
-          ctx.body = {
-            message: 'token 失效',
-            code: codeMessage.ERRCODE
-          }
-        }
-      })
+    const user = ctx.query
+
+    let pass = encrypt(user.password)
+
+    const res = await query(`select username, password from ls_user where username='${user.name}'`)
+
+
+    if (res.length && res[0].password === pass) {
+      ctx.body = {
+        message: 'login successful',
+        code: codeMessage.SUCCESSCODE
+      }
+    } else {
+      ctx.body = {
+        message: 'login failed',
+        code: codeMessage.ERRCODE
+      }
     }
+    // const token = ctx.header.authorization
+    // if (token) {
+    //   jwt.verify(token, secret.sign, (err, decode) => {
+    //     if (!err) {
+    //       ctx.body = {
+    //         decode
+    //       }
+    //     } else {
+    //       ctx.body = {
+    //         message: 'token 失效',
+    //         code: codeMessage.ERRCODE
+    //       }
+    //     }
+    //   })
+    // }
   },
   async Sign(ctx) {
     const user = ctx.request.body
