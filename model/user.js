@@ -20,9 +20,9 @@ module.exports = {
       }
       const token = jwt.sign(userToken, secret.sign, {expiresIn: '7d'})
       ctx.body = {
-          message: 'get the token successfully',
-          code: codeMessage.SUCCESSCODE,
-          token
+        message: 'get the token successfully',
+        code: codeMessage.SUCCESSCODE,
+        token
       }
     } else {
       ctx.body = {
@@ -35,14 +35,13 @@ module.exports = {
     const user = ctx.query
 
     let pass = encrypt(user.password)
-
     const res = await query(`select username, password from ls_user where username='${user.name}'`)
-
 
     if (res.length && res[0].password === pass) {
       ctx.body = {
         message: 'login successful',
-        code: codeMessage.SUCCESSCODE
+        code: codeMessage.SUCCESSCODE,
+        data: res[0]
       }
     } else {
       ctx.body = {
@@ -68,6 +67,8 @@ module.exports = {
   },
   async Sign(ctx) {
     const user = ctx.request.body
+
+    console.log(user)
 
     const res = await query(`select username, password from ls_user where username='${user.name}'`)
 
