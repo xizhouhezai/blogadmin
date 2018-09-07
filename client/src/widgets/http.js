@@ -38,7 +38,6 @@ export default class Http {
     })
 
     let url = baseUrl + uri
-    // url = `${url}?name=${data.name}&password=${data.password}`
 
     let sOptions = {}
 

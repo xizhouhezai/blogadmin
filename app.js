@@ -23,7 +23,8 @@ app.use(koaJwt({secret: secret.sign}).unless({
   path: [
     /^\/v1\/auth/,
     /^\/v1\/login/,
-    /^\/v1\/sign/
+    /^\/v1\/sign/,
+    /^\/v1\/upload/
   ]
 }))
 

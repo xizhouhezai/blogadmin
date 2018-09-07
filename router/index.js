@@ -8,5 +8,6 @@ router.post('/v1/auth', user.Auth)
 router.get('/v1/login', user.Login)
 router.post('/v1/sign', user.Sign)
 router.get('/v1/articles', content.Article)
+router.post('/v1/upload', content.Upload)
 
 module.exports = router

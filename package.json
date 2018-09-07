@@ -8,6 +8,7 @@
     "jsonwebtoken": "^8.3.0",
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",
+    "koa-formidable": "^1.1.0",
     "koa-jwt": "^3.3.2",
     "koa-router": "^7.4.0",
     "koa2-cors": "^2.0.6",
