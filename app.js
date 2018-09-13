@@ -2,11 +2,17 @@ const koa = require('koa')
 const bodyParse = require('koa-bodyparser')
 const cors = require('koa2-cors')
 const koaJwt = require('koa-jwt')
+const static = require('koa-static')
+// var formidable = require('koa-formidable')
 
 const secret = require('./config')
 const router = require('./router')
 
 const app = new koa()
+
+app.use(bodyParse({
+  enableTypes: ['json', 'form', 'text']
+}))
 
 app.use(cors({
   origin: function (ctx) {
@@ -18,17 +24,22 @@ app.use(cors({
   allowMethods: ['GET', 'POST', 'DELETE'],
   allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
 }))
-app.use(bodyParse())
+
 app.use(koaJwt({secret: secret.sign}).unless({
   path: [
     /^\/v1\/auth/,
     /^\/v1\/login/,
     /^\/v1\/sign/,
-    /^\/v1\/upload/
+    /^\/v1\/upload/,
+    /^\//
   ]
 }))
 
+// app.use(formidable())
+
 app.use(router.routes())
+
+app.use(static(__dirname + '/upload'))
 
 app.listen(3333, (err) => {
   if (!err) {
