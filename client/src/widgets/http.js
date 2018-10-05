@@ -3,7 +3,6 @@ import axios from 'axios'
 export default class Http {
   constructor (apis) {
     this.apis = apis
-    console.log(this)
   }
   install (Vue) {
     let self = this
@@ -32,7 +31,6 @@ export default class Http {
     let uri = ''
     Object.keys(this.apis).forEach(key => {
       if (key === name) {
-        console.log(name)
         uri = this.apis[name].uri
       }
     })
@@ -54,8 +52,6 @@ export default class Http {
 
     let sMethod = method.toLowerCase()
 
-    console.log(url)
-    console.log(sMethod)
     axios[sMethod](url, sOptions).then((res) => {
       resolve(res.data)
     }).catch(err => {
