@@ -1,3 +1,5 @@
+const query = require('../db/query')
+
 module.exports = {
   async Article(ctx) {
     ctx.body = {
@@ -21,5 +23,9 @@ module.exports = {
       code: 1,
       pictureUrl: url
     }
+  },
+  async category(ctx) {
+    const { user_id, name, slug, description, type } = ctx.request.body
+    const res = query(`insert into ls_meta (user_id, name, slug, description, type) value (${user_id},'${name}','${slug}','${description}','${type}')`)
   }
 }

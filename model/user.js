@@ -6,6 +6,7 @@ const { codeMessage } = require('../config/info')
 const query = require('../db/query')
 
 module.exports = {
+  // 获取token
   async Auth(ctx) {
     const user = ctx.request.body
 
@@ -49,6 +50,7 @@ module.exports = {
         code: codeMessage.ERRCODE
       }
     }
+    // 解析token
     // const token = ctx.header.authorization
     // if (token) {
     //   jwt.verify(token, secret.sign, (err, decode) => {
