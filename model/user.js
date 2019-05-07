@@ -6,7 +6,7 @@ const { codeMessage } = require('../config/info')
 const query = require('../db/query')
 
 module.exports = {
-  // 获取token
+  // 获取token post方法
   async Auth(ctx) {
     const user = ctx.request.body
 
@@ -19,6 +19,7 @@ module.exports = {
         id: res[0].id,
         name: res[0].username
       }
+      // 设置token包括的返回信息以及过期时间
       const token = jwt.sign(userToken, secret.sign, {expiresIn: '7d'})
       ctx.body = {
         message: 'get the token successfully',
@@ -82,9 +83,18 @@ module.exports = {
     } else {
       let pass = encrypt(user.password)
       await query(`insert into ls_user (username, password) value ('${user.name}','${pass}')`)
+      const getUser = await query(`select id, username from ls_user where username='${user.name}'`)
+      let userToken = {
+        id: getUser[0].id,
+        name: getUser[0].username
+      }
+      // 设置token包括的返回信息以及过期时间
+      const token = jwt.sign(userToken, secret.sign, {expiresIn: '7d'})
+
       ctx.body = {
         code: codeMessage.SUCCESSCODE,
-        message: 'registration success'
+        message: 'registration success',
+        token
       }
     }
   }
