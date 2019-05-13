@@ -24,7 +24,7 @@ app.use(cors({
   allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
 }))
 
-// 设置无序token验证的API
+// 设置无需token验证的API
 app.use(koaJwt({secret: secret.sign}).unless({
   path: [
     /^\/v1\/auth/,
